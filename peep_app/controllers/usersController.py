@@ -170,7 +170,7 @@ def profileAPI(profileId):
 
         followers = userModel.User.getFollowersByUserId({'userId': user.id})
         following = userModel.User.getFollowingByUserId({'userId': user.id})
-        posts = postModel.Post.get_all_by_author({'userId': user.id})
+        posts = postModel.Post.get_all_by_author({'userId': user.id, 'requesterId': currentUser.id})
 
         followers_data = []
         following_data = []
@@ -181,7 +181,7 @@ def profileAPI(profileId):
                 'id': data.id,
                 'firstname': data.firstname,
                 'lastname': data.lastname,
-                'nickname': data.nickname
+                'username': data.username
             }
             followers_data.append(current)
 
@@ -190,7 +190,7 @@ def profileAPI(profileId):
                 'id': data.id,
                 'firstname': data.firstname,
                 'lastname': data.lastname,
-                'nickname': data.nickname
+                'username': data.username
             }
             following_data.append(current)
 

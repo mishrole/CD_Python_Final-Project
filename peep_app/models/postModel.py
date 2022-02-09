@@ -72,6 +72,7 @@ class Post:
 
         posts = []
         userId = data['userId']
+        requesterId = data['requesterId']
 
         if results:
             if len(results) > 0:
@@ -100,11 +101,16 @@ class Post:
                         'postId' : currentPost.id
                     }
 
+                    current_user_like_request = {
+                        'userId': requesterId,
+                        'postId' : currentPost.id
+                    }
+
                     currentPost.author = userModel.User(author_data)
                     currentPost.likes = cls.count_all_likes(likes_request)
                     currentPost.users_who_like = cls.get_users_who_like(likes_request)
 
-                    currentUserLikes = cls.count_likes_by_user_and_post(likes_request)
+                    currentUserLikes = cls.count_likes_by_user_and_post(current_user_like_request)
 
                     if currentUserLikes > 0:
                         currentPost.isLiked = True

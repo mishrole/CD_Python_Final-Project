@@ -107,7 +107,7 @@ class User:
                     current_user.status = status_data
                     current_user.followers = cls.getFollowersByUserId({'userId': current_user.id})
                     current_user.following = cls.getFollowingByUserId({'userId': current_user.id})
-                    current_user.posts = postModel.Post.get_all_by_author({'userId': current_user.id})
+                    current_user.posts = postModel.Post.get_all_by_author({'userId': current_user.id, 'requesterId': current_user.id})
                     users.append(current_user)
 
         return users
@@ -155,7 +155,7 @@ class User:
 
                 user.followers = cls.getFollowersByUserId({'userId': user.id})
                 user.following = cls.getFollowingByUserId({'userId': user.id})
-                user.posts = postModel.Post.get_all_by_author({'userId': user.id})
+                user.posts = postModel.Post.get_all_by_author({'userId': user.id, 'requesterId': user.id})
 
                 country_data = {
                     'id': results[0]['C.id'],

@@ -119,4 +119,3 @@ Create table reports (
 Insert into roles(name) values ('Administrator'), ('User');
 Insert into user_status(name) values('Pending'), ('Active'), ('Blocked'), ('Deleted');
 Insert into countries(name, iso) values ('Argentina', 'ARG'), ('Bolivia', 'BOL'), ('Brazil', 'BRA'), ('Chile', 'CHL'), ('Colombia', 'COL'), ('Ecuador', 'ECU'), ('Mexico', 'MEX'), ('Peru', 'PER'), ('Uruguay', 'URY'), ('Venezuela', 'VEN');
-

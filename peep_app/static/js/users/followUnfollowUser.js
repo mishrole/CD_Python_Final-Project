@@ -1,6 +1,6 @@
 const container = document.querySelector('#follow-unfollow-container');
 
-function follow(followedId, followerId)  {
+function follow(followedId, followerId, fn)  {
 
     const config = {
         method : 'POST',
@@ -19,9 +19,9 @@ function follow(followedId, followerId)  {
         })
         .then (jsonResponse => {
             console.log(jsonResponse);
-            const followers = document.querySelector('#followers');
-            followers.innerHTML = parseInt(followers.textContent) + 1;
-            container.innerHTML = `<button type="button" onclick="unfollow(${followedId}, ${followerId})" class="btn btn-outline-danger">Unfollow</button>`;
+            if (fn === 'profile-data') {
+                getProfileData();
+            }
         })
         .catch(error => {
             console.log(error);
@@ -29,7 +29,7 @@ function follow(followedId, followerId)  {
 
 }
 
-function unfollow(followedId, followerId) {
+function unfollow(followedId, followerId, fn) {
 
     const config = {
         method : 'POST',
@@ -48,9 +48,9 @@ function unfollow(followedId, followerId) {
         })
         .then (jsonResponse => {
             console.log(jsonResponse);
-            const followers = document.querySelector('#followers');
-            followers.innerHTML = parseInt(followers.textContent ) - 1;
-            container.innerHTML = `<button type="button" onclick="follow(${followedId}, ${followerId})" class="btn btn-outline-primary">Follow</button>`
+            if (fn === 'profile-data') {
+                getProfileData();
+            }
         })
         .catch(error => {
             console.log(error);
