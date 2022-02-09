@@ -1,0 +1,1 @@
+const getLastItem = path => path.substring(path.lastIndexOf('/') + 1);

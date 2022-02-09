@@ -1,0 +1,61 @@
+.idx-aside-container {
+    min-height: 100vh;
+    display: flex;
+    flex-flow: row;
+}
+
+.idx-aside-left {
+    display: none;
+}
+
+.idx-aside-right {
+    display: flex;
+    flex: 1 1 auto;
+}
+
+.idx-image-cover {
+    height: 100%;
+    width: 100%;
+    object-fit: cover;
+}
+
+@media (min-width: 1017px) {
+    .idx-aside-left{
+        display: flex;
+        flex: 1 1 auto;
+    }
+
+    .idx-aside-left {
+        max-width: 50vw;
+    }
+}
+
+.show {
+    display: block !important;
+}
+
+.post-content {
+    white-space: pre-wrap;
+}
+
+/* Scrollbar */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #8886;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #88888887;
+}
