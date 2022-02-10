@@ -22,7 +22,8 @@ const searchCollectionByNameAndLoggedUser = (name, currentPostId) => {
         } else {
             createCollectionBtn.classList.add('d-none');
         }
-
+        
+        // Collections Modal owned by logged user
         collectionsContainer.innerHTML = ""
 
         collections.forEach(collection => {

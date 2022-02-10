@@ -201,7 +201,12 @@ const createProfilePosts = (posts, currentUser) => {
         buttonBookmarkModal.classList.add('btn', 'btn-default');
         buttonBookmarkModal.type = 'button';
         buttonBookmarkModal.onclick = () => showBookmarkModal(post.id);
-        buttonBookmarkModal.innerHTML = `<i class="bi bi-bookmark"></i>`;
+        
+        if(post.isSaved) {
+            buttonBookmarkModal.innerHTML = `<i class="bi bi-bookmark-fill"></i>`;
+        } else {
+            buttonBookmarkModal.innerHTML = `<i class="bi bi-bookmark"></i>`;
+        }
 
         // Likes
         const flexLikesContainer = document.createElement('div');

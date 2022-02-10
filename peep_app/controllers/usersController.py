@@ -180,8 +180,28 @@ def profileAPI(profileId):
                 },
                 'time_ago': data.time_ago,
                 'likes': data.likes,
-                'isLiked': data.isLiked
+                'isLiked': data.isLiked,
+                'isSaved': data.isSaved
             }
+
+            in_collections_data = []
+
+            for collection in data.in_collections:
+                current_collection = {
+                    'id': collection.id,
+                    'name': collection.name,
+                    'description': collection.description,
+                    'created_at': collection.created_at,
+                    'updated_at': collection.updated_at
+                }
+                in_collections_data.append(current_collection)
+
+            current['in_collections'] = in_collections_data
+
+            # if data.in_collections:
+            #     if len(data.in_collections) > 0:
+            #         current['isSaved'] = True
+
             posts_data.append(current)
 
         response = {

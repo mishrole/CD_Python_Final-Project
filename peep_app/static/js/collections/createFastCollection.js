@@ -1,4 +1,4 @@
-const createFastCollection = (data) => {
+const createFastCollection = (data, currentPostId) => {
 
     const config = {
         method : 'POST',
@@ -23,6 +23,6 @@ const createFastCollection = (data) => {
             console.log(error);
         })
         .finally(() => {
-            searchCollectionByNameAndLoggedUser("")
+            searchCollectionByNameAndLoggedUser("", currentPostId)
         })
 }

@@ -1,4 +1,4 @@
-const addPostToCollection = (collectionId, postId) => {
+const addPostToCollection = (collectionId, postId, fn) => {
     const config = {
         method : 'POST',
         headers : {
@@ -21,11 +21,12 @@ const addPostToCollection = (collectionId, postId) => {
         console.log(error);
     })
     .finally(() => {
+        fn.fn();
         searchCollectionByNameAndLoggedUser("", postId);
     })
 }
 
-const removePostFromCollection = (collectionId, postId) => {
+const removePostFromCollection = (collectionId, postId, fn) => {
     const config = {
         method : 'POST',
         headers : {
@@ -48,6 +49,7 @@ const removePostFromCollection = (collectionId, postId) => {
         console.log(error);
     })
     .finally(() => {
+        fn.fn();
         searchCollectionByNameAndLoggedUser("", postId);
     })
 }

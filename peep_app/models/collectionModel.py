@@ -52,7 +52,7 @@ class Collection:
         # search = "'%" + data['search'] + "%'"
         search = "'" + data['search'] + "%'"
         userId = data['userId']
-        query = "Select * from collections C inner join users U on C.owner_id = U.id where C.name like %s and C.owner_id like %i order by C.name asc;" % (search, userId,)
+        query = "Select * from collections C inner join users U on C.owner_id = U.id where C.name like %s and C.owner_id like %i order by C.name asc limit 5;" % (search, userId,)
         results = connectToMySQL('peep_app_schema').query_db(query)
 
         collections = []
@@ -135,6 +135,11 @@ class Collection:
     @classmethod
     def get_collections_of_saved_post(cls, data):
         query = "Select * from collections C inner join collections_has_posts CP on C.id = CP.collection_id where CP.post_id = %(postId)s;"
+        return connectToMySQL('peep_app_schema').query_db(query, data)
+
+    @classmethod
+    def get_collections_of_saved_post_by_owner(cls, data):
+        query = "Select * from collections C inner join collections_has_posts CP on C.id = CP.collection_id where CP.post_id = %(postId)s and C.owner_id = %(ownerId)s;"
         return connectToMySQL('peep_app_schema').query_db(query, data)
 
     @staticmethod

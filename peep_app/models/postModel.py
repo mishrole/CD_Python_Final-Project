@@ -15,6 +15,7 @@ class Post:
         self.isLiked = False
         self.users_who_like = []
         self.in_collections = []
+        self.isSaved = False
 
     @classmethod
     def get_all(cls, data):
@@ -47,7 +48,7 @@ class Post:
                         'role' : None,
                     }
 
-                    collections =  collectionModel.Collection.get_collections_of_saved_post({'postId': currentPost.id})
+                    collections =  collectionModel.Collection.get_collections_of_saved_post_by_owner({'postId': currentPost.id, 'ownerId': userId})
                     in_collections = []
 
                     if collections:
@@ -64,6 +65,11 @@ class Post:
                             
 
                     currentPost.in_collections = in_collections
+
+                    if len(currentPost.in_collections) > 0:
+                        currentPost.isSaved = True
+                    else:
+                        currentPost.isSaved = False
 
                     likes_request = {
                         'userId' : userId,
@@ -115,23 +121,29 @@ class Post:
                         'role' : None,
                     }
 
-                    collections =  collectionModel.Collection.get_collections_of_saved_post(currentPost.id)
+                    # is current post saved in requester collections
+                    collections =  collectionModel.Collection.get_collections_of_saved_post_by_owner({'postId': currentPost.id, 'ownerId': requesterId})
                     in_collections = []
 
                     if collections:
                         for collection in collections:
                             collection_data = {
-                                'id': collection['C.id'],
+                                'id': collection['id'],
                                 'name': collection['name'],
                                 'description': collection['description'],
-                                'created_at' : collection['C.created_at'],
-                                'updated_at' : collection['C.updated_at']
+                                'created_at' : collection['created_at'],
+                                'updated_at' : collection['updated_at']
                             }
 
                             in_collections.append(collectionModel.Collection(collection_data))
 
 
                     currentPost.in_collections = in_collections
+
+                    if len(currentPost.in_collections) > 0:
+                        currentPost.isSaved = True
+                    else:
+                        currentPost.isSaved = False
 
                     likes_request = {
                         'userId' : userId,

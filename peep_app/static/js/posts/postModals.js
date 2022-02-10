@@ -20,15 +20,33 @@ function showBookmarkModal(id) {
 // Used in searchCollectionByNameAndLoggedUser
 const addCurrentPostToCollection = (collectionId) => {
     console.log(`collection${collectionId} - post${currentPost}`);
-    addPostToCollection(collectionId, currentPost);
     // searchCollectionByNameAndLoggedUser("", currentPost);
+    let fn = {}
+    // No trae la data con la última actualización
+    if (bookmarkModal.classList.contains('location-profile')) {
+        fn.fn = getProfileData;
+    } else if (bookmarkModal.classList.contains('location-dashboard')) {
+        fn.fn = getAllPosts;
+    }
+
+    addPostToCollection(collectionId, currentPost, fn);
 }
 
 // Used in searchCollectionByNameAndLoggedUser
 const removeCurrentPostFromCollection = (collectionId) => {
     console.log(`collection${collectionId} - post${currentPost}`);
-    removePostFromCollection(collectionId, currentPost);
     // searchCollectionByNameAndLoggedUser("", currentPost);
+
+    let fn = {}
+
+    // No trae la data con la última actualización
+    if (bookmarkModal.classList.contains('location-profile')) {
+        fn.fn = getProfileData;
+    } else if (bookmarkModal.classList.contains('location-dashboard')) {
+        fn.fn = getAllPosts;
+    }
+
+    removePostFromCollection(collectionId, currentPost, fn);
 }
 
 const createFastCollectionForm = document.querySelector('#createFastCollectionForm');
@@ -44,7 +62,7 @@ createFastCollectionForm.addEventListener('submit', (event) => {
             'name': event.target.name.value,
         };
 
-        createFastCollection(data);
+        createFastCollection(data, currentPost);
         Clear(Array.from(inputs));
         createFastCollectionForm.reset();
     }

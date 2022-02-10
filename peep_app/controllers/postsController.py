@@ -80,7 +80,8 @@ def get_all_posts_API():
                 },
                 'time_ago': post.time_ago,
                 'likes': post.likes,
-                'isLiked': post.isLiked
+                'isLiked': post.isLiked,
+                'isSaved': post.isSaved
             }
             
             users_list = []

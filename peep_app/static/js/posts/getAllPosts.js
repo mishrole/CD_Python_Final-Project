@@ -65,7 +65,11 @@ const getAllPosts = () => {
                                     `
                                 }
                                 <button class="btn btn-default" type="button" onclick="showCommentsModal(${post.id})"><i class="bi bi-chat"></i></button>
-                                <button class="btn btn-default" type="button" id="btnBookmarkModal" onclick="showBookmarkModal(${post.id})"><i class="bi bi-bookmark"></i></button>
+                                ${ post.isSaved ?
+                                    `<button class="btn btn-default" type="button" id="btnBookmarkModal" onclick="showBookmarkModal(${post.id})"><i class="bi bi-bookmark-fill"></i></button>`
+                                    :
+                                    `<button class="btn btn-default" type="button" id="btnBookmarkModal" onclick="showBookmarkModal(${post.id})"><i class="bi bi-bookmark"></i></button>`
+                                }
                             </div>
                         </div>
                     </div>
