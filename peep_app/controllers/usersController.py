@@ -1,11 +1,8 @@
-from flask import Flask, jsonify, json, render_template, request, redirect, session, flash
+from flask import Flask, jsonify,render_template, request, redirect, session, flash
 from peep_app import app
 from peep_app.models import userModel, postModel
 from flask_bcrypt import Bcrypt
 from peep_app.constants import user_status_enum
-
-import json
-from json import JSONEncoder
 
 bcrypt = Bcrypt(app)
 
@@ -91,29 +88,34 @@ def profile(profileId):
         return redirect('/')
         
 
+@app.route('/users/profile/<int:profileId>/collections', methods=['GET'])
+def collections(profileId):
 
-@app.route('/users/follow/<int:followedId>/by/<int:followerId>', methods=['POST'])
-def followUser(followedId, followerId):
+    userId = None
 
-    follow_data = {
-        'followedId': followedId,
-        'followerId': followerId
-    }
+    if 'userId' in session:
+        userId = session['userId']
+        isLogged = True
 
-    userModel.User.follow_user(follow_data)
-    return redirect(f'/users/profile/{followedId}')
+        currentUser = userModel.User.findUserById({'userId': userId})
 
-@app.route('/users/unfollow/<int:followedId>/by/<int:followerId>', methods=['POST'])
-def unfollowUser(followedId, followerId):
+        # Si hay userId pero no encuentra un usuario, hace logout
+        if currentUser == None:
+            return redirect('/logout')
+        
+        user = userModel.User.findUserById({'userId': profileId})
 
-    follow_data = {
-        'followedId': followedId,
-        'followerId': followerId
-    }
-
-    userModel.User.unfollow_user(follow_data)
-    return redirect(f'/users/profile/{followedId}')
-
+        if user == None:
+            return redirect('/')
+    
+        return render_template(
+            'collection.html',
+            currentUser = currentUser,
+            isLogged = isLogged,
+            user = user
+        )
+    else:
+        return redirect('/')
 
 
 #  --------------------  API   -------------------- 

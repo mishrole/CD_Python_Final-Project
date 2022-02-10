@@ -40,7 +40,7 @@ const getAllPosts = () => {
                                 <div class="col-10 col-lg-11">
                                     <h5>
                                         <a class="text-black text-decoration-none" href="/users/profile/${post.author.id}">${post.author.firstname} ${post.author.lastname}</a> 
-                                        <span class="text-primary fs-6">
+                                        <span class="text-primary fs-6 fw-normal">
                                             ${post.author.username != null ? '@'+post.author.username : ''}
                                             • ${post.time_ago}</span>
                                     </h5>

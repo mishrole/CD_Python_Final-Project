@@ -1,0 +1,33 @@
+:root {
+    --blue-accent: #b4dff7;
+    --blue-dark-background: #3d78cb;
+    --blue-light-text: #f4f8fa;
+    --blue-stable-text: #294693;
+    --blue-dark-text: #1d2f6a;
+    --blue-light-background: #dcf1fb;
+
+    --red-dark-background: #eea2b2;
+    --red-light-text: #471113;
+}
+
+/* Scrollbar */
+
+/* width */
+::-webkit-scrollbar {
+    width: 10px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+    background: #f1f1f1;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+    background: #8886;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+    background: #88888887;
+}

@@ -37,25 +37,3 @@
 .post-content {
     white-space: pre-wrap;
 }
-
-/* Scrollbar */
-
-/* width */
-::-webkit-scrollbar {
-    width: 10px;
-}
-
-/* Track */
-::-webkit-scrollbar-track {
-    background: #f1f1f1;
-}
-
-/* Handle */
-::-webkit-scrollbar-thumb {
-    background: #8886;
-}
-
-/* Handle on hover */
-::-webkit-scrollbar-thumb:hover {
-    background: #88888887;
-}

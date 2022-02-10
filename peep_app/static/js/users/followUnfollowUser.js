@@ -1,6 +1,6 @@
 const container = document.querySelector('#follow-unfollow-container');
 
-function follow(followedId, followerId, fn)  {
+const follow = (followedId, followerId, fn) =>  {
 
     const config = {
         method : 'POST',
@@ -29,7 +29,7 @@ function follow(followedId, followerId, fn)  {
 
 }
 
-function unfollow(followedId, followerId, fn) {
+const unfollow = (followedId, followerId, fn) => {
 
     const config = {
         method : 'POST',

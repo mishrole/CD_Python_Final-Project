@@ -124,7 +124,7 @@ const createProfileHeader = (user, currentUser) => {
 
 const createProfilePosts = (posts, currentUser) => {
     const mainContainer = document.createElement('div');
-    mainContainer.classList.add('container');
+    mainContainer.classList.add('container', 'py-4', 'border-top');
 
     if ( posts.length == 0 ) {
         const divNoPosts = document.createElement('div');
@@ -173,7 +173,7 @@ const createProfilePosts = (posts, currentUser) => {
         anchorAuthorNameProfile.textContent = `${post.author.firstname} ${post.author.lastname}`;
 
         const spanNameProfile = document.createElement('span');
-        spanNameProfile.classList.add('text-primary', 'fs-6');
+        spanNameProfile.classList.add('text-primary', 'fs-6', 'fw-normal');
 
         if ( post.author.username != null ) {
             spanNameProfile.textContent = `@${post.author.username}`;

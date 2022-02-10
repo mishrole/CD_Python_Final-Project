@@ -8,14 +8,24 @@ const bookmarkModal = new bootstrap.Modal(document.querySelector('#bookmarkModal
 
 function showBookmarkModal(id) {
     bookmarkModal.show();
-    alert(id);
+    // alert(id);
 }
+
+// const createCollectionBtn = document.querySelector('#collectionCreateButton');
+const inputSearch = document.querySelector('#collectionSearchInput');
+
+inputSearch.addEventListener('keyup', (e) => {
+    // console.log(inputSearch.value);
+    searchCollectionByNameAndOwner(inputSearch.value);
+});
+
 
 // Comments
 
 const btnCommentsModal = document.querySelectorAll('.btnCommentsModal');
+const commentsContainer = document.querySelector('#commentsModal');
 
-const commentsModal = new bootstrap.Modal(document.querySelector('#commentsModal'), {
+const commentsModal = new bootstrap.Modal(commentsContainer, {
     keyboard: false
 });
 
@@ -24,26 +34,27 @@ function showCommentsModal(id) {
     alert(id);
 }
 
+
 // Likes
 
 const btnLikesModal = document.querySelectorAll('.btnLikesModal');
 const likesContainer = document.querySelector('#likesContainer');
-const modal = document.querySelector('#likesModal');
+const likesModal = document.querySelector('#likesModal');
 
-const likesModal = new bootstrap.Modal(modal, {
+const likesModalBootstrap = new bootstrap.Modal(likesModal, {
     keyboard: false
 });
 
-modal.addEventListener('hidden.bs.modal', (event) => {
+likesModal.addEventListener('hidden.bs.modal', (event) => {
     likesContainer.innerHTML = "";
 })
 
-function showLikesModal(postId) {
+const showLikesModal = (postId) => {
     getLikesFromPost(postId);
-    likesModal.show();
+    likesModalBootstrap.show();
 }
 
-function getLikesFromPost(postId) {
+const getLikesFromPost = (postId) => {
     const config = {
         method: 'GET'
     }
@@ -56,6 +67,20 @@ function getLikesFromPost(postId) {
         })
         .then (jsonResponse => {
             console.log(jsonResponse);
+
+            if (jsonResponse.length == 0) {
+                likesContainer.innerHTML = `
+                <div class="d-flex flex-column">
+                    <div class="p-2">
+                        <div class="row align-items-center justify-content-center">
+                            <div class="col-12 text-center">
+                                <p class="fw-bold">😢 No likes yet 😢</p>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                `
+            }
             
             jsonResponse.forEach(user => {
                 likesContainer.innerHTML += `
