@@ -1,6 +1,6 @@
 from peep_app.config.mysqlconnection import connectToMySQL
 from flask import flash
-from peep_app.models import userModel
+from peep_app.models import userModel, collectionModel
 from datetime import datetime
 
 class Post:
@@ -14,6 +14,7 @@ class Post:
         self.likes = 0
         self.isLiked = False
         self.users_who_like = []
+        self.in_collections = []
 
     @classmethod
     def get_all(cls, data):
@@ -45,6 +46,24 @@ class Post:
                         'country' : None,
                         'role' : None,
                     }
+
+                    collections =  collectionModel.Collection.get_collections_of_saved_post({'postId': currentPost.id})
+                    in_collections = []
+
+                    if collections:
+                        for collection in collections:
+                            collection_data = {
+                                'id': collection['id'],
+                                'name': collection['name'],
+                                'description': collection['description'],
+                                'created_at' : collection['created_at'],
+                                'updated_at' : collection['updated_at']
+                            }
+
+                            in_collections.append(collectionModel.Collection(collection_data))
+                            
+
+                    currentPost.in_collections = in_collections
 
                     likes_request = {
                         'userId' : userId,
@@ -95,6 +114,24 @@ class Post:
                         'country' : None,
                         'role' : None,
                     }
+
+                    collections =  collectionModel.Collection.get_collections_of_saved_post(currentPost.id)
+                    in_collections = []
+
+                    if collections:
+                        for collection in collections:
+                            collection_data = {
+                                'id': collection['C.id'],
+                                'name': collection['name'],
+                                'description': collection['description'],
+                                'created_at' : collection['C.created_at'],
+                                'updated_at' : collection['C.updated_at']
+                            }
+
+                            in_collections.append(collectionModel.Collection(collection_data))
+
+
+                    currentPost.in_collections = in_collections
 
                     likes_request = {
                         'userId' : userId,

@@ -100,10 +100,18 @@
                 <div class="container">
                     <div class="row">
                         <div class="col-12">
-                            <div class="d-flex justify-content-between gap-3" id="collectionsHeader">
-                                <input type="text" class="form-control" placeholder="Search" id="collectionSearchInput">
-                                <button id="collectionCreateButton" class="btn btn-primary d-none"><i class="bi bi-plus"></i></button>
-                            </div>
+                            <form class="row g-2" method="POST" action="/" id="createFastCollectionForm">
+                                <div class="d-flex justify-content-between gap-3">
+                                    <div class="col">
+                                        <div class="form-floating">
+                                            <input type="text" name="name" class="form-control requires-validation validate-new-fast-collection" placeholder="Search" id="collectionSearchInput">
+                                            <div class="invalid-feedback">Enter a name</div>
+                                            <label for="collectionSearchInput">Collection Name</label>
+                                        </div>
+                                    </div>
+                                    <button id="collectionCreateButton" type="submit" class="btn btn-primary d-none"><i class="bi bi-plus"></i></button>
+                                </div>
+                            </form>
                         </div>
                         <div class="col-12" id="collectionsContainer">
                             
@@ -169,7 +177,9 @@
     <script src="{{ url_for('static', filename='js/posts/getAllPosts.js') }}"></script>
     <script src="{{ url_for('static', filename='js/posts/likeUnlikePost.js') }}"></script>
     
-    <script src="{{ url_for('static', filename='js/collections/searchCollectionByNameAndOwner.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/collections/addRemovePost.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/collections/searchCollectionByNameAndLoggedUser.js') }}"></script>
+    <script src="{{ url_for('static', filename='js/collections/createFastCollection.js') }}"></script>
     <script src="{{ url_for('static', filename='js/posts/postModals.js') }}"></script>
 
 </body>

@@ -95,6 +95,20 @@ def get_all_posts_API():
 
                 users_list.append(current_user)
 
+            collections_list = []
+
+            for data in post.in_collections:
+                current_collection = {
+                    'id': data.id,
+                    'name': data.name,
+                    'description': data.description,
+                    'created_at' : data.created_at,
+                    'updated_at' : data.updated_at
+                }
+
+                collections_list.append(current_collection)
+
+            current_post['in_collections'] = collections_list
             current_post['users_who_like'] = users_list
             mappedPosts.append(current_post)
 

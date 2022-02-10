@@ -1,9 +1,12 @@
 const searchCollectionByNameAndOwner = (name) => {
+
+    const ownerId = getItemByReferenceAndReversePosition(path = window.location.pathname, reference = '', position = 1);
+
     const config = {
         method: 'GET'
     }
 
-    fetch( `${APP_URL}/api/collections/search?name=${name}`, config)    
+    fetch( `${APP_URL}/api/collections/${ownerId}/search?name=${name}`, config)    
     .then(response => {
         if (response.ok) {
             return response.json()
@@ -12,15 +15,9 @@ const searchCollectionByNameAndOwner = (name) => {
         }
     })
     .then (jsonResponse => {
+        console.log(jsonResponse);
         const collections = jsonResponse.data.collections;
-        const createCollectionBtn = document.querySelector('#collectionCreateButton');
         const collectionsContainer = document.querySelector('#collectionsContainer');
-
-        if (collections.length === 0) {
-            createCollectionBtn.classList.remove('d-none');
-        } else {
-            createCollectionBtn.classList.add('d-none');
-        }
 
         collectionsContainer.innerHTML = ""
 
@@ -31,10 +28,11 @@ const searchCollectionByNameAndOwner = (name) => {
                     <i class="bi bi-journal"></i> 
                 </div>
                 <div class="col-8">
-                    <p class="m-0">${collection.name}</p>
+                    <p class="m-0 fw-bold">${collection.name}</p>
                 </div>
-                <div class="col-3 d-flex justify-content-end">
-                    <button class="btn btn-primary">Add</button>
+                <div class="col-3 d-flex justify-content-end gap-3">
+                    <button class="btn btn-outline-secondary"><i class="bi bi-pencil"></i></button>
+                    <button class="btn btn-outline-danger"><i class="bi bi-trash"></i></button>
                 </div>
             </div>
             `
@@ -47,4 +45,3 @@ const searchCollectionByNameAndOwner = (name) => {
     })
 
 }
-  

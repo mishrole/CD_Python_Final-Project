@@ -1,23 +1,63 @@
 // Collections
 
-const btnBookmarkModal = document.querySelectorAll('.btnBookmarkModal');
+let currentPost = 0;
+let currentPlace = '';
 
-const bookmarkModal = new bootstrap.Modal(document.querySelector('#bookmarkModal'), {
+const btnBookmarkModal = document.querySelectorAll('.btnBookmarkModal');
+const bookmarkModal = document.querySelector('#bookmarkModal');
+
+const bookmarkBoostrapModal = new bootstrap.Modal(bookmarkModal, {
     keyboard: false
 });
 
 function showBookmarkModal(id) {
-    bookmarkModal.show();
-    // alert(id);
+    currentPost = id;
+    bookmarkBoostrapModal.show();
+    searchCollectionByNameAndLoggedUser("", currentPost);
+    console.log('currentPost', currentPost);
 }
 
-// const createCollectionBtn = document.querySelector('#collectionCreateButton');
+// Used in searchCollectionByNameAndLoggedUser
+const addCurrentPostToCollection = (collectionId) => {
+    console.log(`collection${collectionId} - post${currentPost}`);
+    addPostToCollection(collectionId, currentPost);
+    // searchCollectionByNameAndLoggedUser("", currentPost);
+}
+
+// Used in searchCollectionByNameAndLoggedUser
+const removeCurrentPostFromCollection = (collectionId) => {
+    console.log(`collection${collectionId} - post${currentPost}`);
+    removePostFromCollection(collectionId, currentPost);
+    // searchCollectionByNameAndLoggedUser("", currentPost);
+}
+
+const createFastCollectionForm = document.querySelector('#createFastCollectionForm');
+
+createFastCollectionForm.addEventListener('submit', (event) => {
+    event.preventDefault();
+
+    const inputs = document.querySelectorAll('.requires-validation.validate-new-fast-collection');
+    const isValid = Validate(Array.from(inputs));
+
+    if (isValid) {
+        const data = {
+            'name': event.target.name.value,
+        };
+
+        createFastCollection(data);
+        Clear(Array.from(inputs));
+        createFastCollectionForm.reset();
+    }
+})
+
 const inputSearch = document.querySelector('#collectionSearchInput');
 
 inputSearch.addEventListener('keyup', (e) => {
     // console.log(inputSearch.value);
-    searchCollectionByNameAndOwner(inputSearch.value);
+    searchCollectionByNameAndLoggedUser(inputSearch.value, currentPost);
 });
+
+
 
 
 // Comments
@@ -33,6 +73,9 @@ function showCommentsModal(id) {
     commentsModal.show();
     alert(id);
 }
+
+
+
 
 
 // Likes
@@ -102,3 +145,11 @@ const getLikesFromPost = (postId) => {
             });
         });
 }
+
+
+// Hide Bootstrap Modals Listener
+bookmarkModal.addEventListener('hidden.bs.modal', (event) => {
+    createFastCollectionForm.reset();
+    // document.querySelector('#collectionsContainer').innerHTML = "";
+    currentPost = 0;
+});

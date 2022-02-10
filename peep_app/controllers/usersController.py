@@ -88,36 +88,6 @@ def profile(profileId):
         return redirect('/')
         
 
-@app.route('/users/profile/<int:profileId>/collections', methods=['GET'])
-def collections(profileId):
-
-    userId = None
-
-    if 'userId' in session:
-        userId = session['userId']
-        isLogged = True
-
-        currentUser = userModel.User.findUserById({'userId': userId})
-
-        # Si hay userId pero no encuentra un usuario, hace logout
-        if currentUser == None:
-            return redirect('/logout')
-        
-        user = userModel.User.findUserById({'userId': profileId})
-
-        if user == None:
-            return redirect('/')
-    
-        return render_template(
-            'collection.html',
-            currentUser = currentUser,
-            isLogged = isLogged,
-            user = user
-        )
-    else:
-        return redirect('/')
-
-
 #  --------------------  API   -------------------- 
 
 @app.route('/api/users/follow/<int:followedId>/by/<int:followerId>', methods=['POST'])

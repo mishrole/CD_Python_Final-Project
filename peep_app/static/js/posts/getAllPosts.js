@@ -13,6 +13,7 @@ const getAllPosts = () => {
             }
         })
         .then (jsonResponse => {
+            console.log(jsonResponse);
             const container = document.querySelector('#posts-container');
             container.innerHTML = "";
 
