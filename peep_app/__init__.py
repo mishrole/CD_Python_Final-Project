@@ -1,5 +1,5 @@
 from flask import Flask
-# from flask_cors import CORS
+from flask_cors import CORS
 from flask_mail import Mail
 from dotenv import load_dotenv
 import os
@@ -9,7 +9,7 @@ load_dotenv()
 app = Flask( __name__ )
 app.secret_key = "coding-dojo"
 
-# CORS( app, resources={r"/api/*" : {"origins": "*"}} )
+CORS( app, resources={r"/api/*" : {"origins": "*"}} )
 
 # SMTP Mail Configuration
 app.config['MAIL_SERVER'] = 'smtp.gmail.com'

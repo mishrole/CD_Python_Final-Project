@@ -121,6 +121,8 @@ def get_all_posts_API():
             return jsonify({'message': 'Posts not found', 'status': 'danger'}), 404
         else:
             return jsonify({'data': response, 'status': 'success', 'currentUser': userId}), 200
+    else:
+        return jsonify({'message': 'Posts not found', 'status': 'danger'}), 404
 
 
 

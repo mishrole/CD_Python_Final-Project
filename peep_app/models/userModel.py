@@ -284,6 +284,71 @@ class User:
 
 
 
+    @staticmethod
+    def validateEditProfile(user):
+        is_valid = True
+
+        # password = user['password']
+        firstname = user['firstname']
+        lastname = user['lastname']
+        birthday = user['birthday']
+        country = user['country']
+
+        if len(birthday) == 0:
+            flash('Birthday must be selected.', 'register_error')
+            is_valid = False
+        else:
+            today = datetime.now()
+            birthdayConverted = datetime.strptime(birthday, "%Y-%m-%d")
+    
+            if birthdayConverted > today:
+                flash('Birthday must be a date in the past', 'register_error')
+                is_valid = False
+            else:
+                age = (today - birthdayConverted) // timedelta(days=365.2425)
+                if age < 18:
+                    flash('You must be at least 18 years old.', 'register_error')
+                    is_valid = False
+
+        if len(firstname) < 2:
+            flash('First name must be at least 2 characters long', 'edit_profile_error')
+            is_valid = False
+
+        if not TEXT_REGEX.match(firstname):
+            flash('First name must only contain letters and . -', 'edit_profile_error')
+            is_valid = False
+
+        if len(lastname) < 2:
+            flash('Last name must be at least 2 characters long', 'edit_profile_error')
+            is_valid = False
+
+        if not TEXT_REGEX.match(lastname):
+            flash('Last name must must only contain letters and . -', 'edit_profile_error')
+            is_valid = False
+
+        if len(country) < 1:
+            flash('Country must be selected.', 'edit_profile_error')
+            is_valid = False
+
+        # gender = user['gender']
+        
+        # if gender == 'Self describe':
+        #     gender = user['other']
+
+        # if len(birthday) == 0:
+        #     flash('Birthday must be selected.', 'register_error')
+        #     is_valid = False
+        # else:
+        #     today = datetime.now()
+        #     birthdayConverted = datetime.strptime(birthday, "%Y-%m-%d")
+    
+        #     if birthdayConverted > today:
+        #         flash('Birthday must be a date in the past', 'register_error')
+        #         is_valid = False
+
+        return is_valid
+
+
     # API
 
     # Followers and Following data
@@ -302,5 +367,5 @@ class User:
 
     @classmethod
     def update_user(cls, data):
-        query = "INSERT INTO users(firstname, lastname, birthday, gender, nickname, upated_at) VALUES (%(firstname)s, %(lastname)s, %(birthday)s, %(gender)s, %(nickname)s, NOW());"
+        query = "UPDATE users SET firstname = %(firstname)s, lastname = %(lastname)s, birthday = %(birthday)s, country_id = %(countryId)s, updated_at = NOW() where id = %(userId)s"
         return connectToMySQL('peep_app_schema').query_db(query, data)

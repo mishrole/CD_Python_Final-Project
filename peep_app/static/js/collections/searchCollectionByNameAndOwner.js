@@ -21,6 +21,10 @@ const searchCollectionByNameAndOwner = (name, limit) => {
 
         collectionsContainer.innerHTML = ""
 
+        if (collections.length === 0) {
+            collectionsContainer.innerHTML = '<div class="d-flex justify-content-center align-items-center"><p>😢 No collections yet. 😢</p></div>'
+        }
+
         collections.forEach(collection => {
             collectionsContainer.innerHTML +=`
             <div class="row justify-content-center align-items-center pt-4">
@@ -36,7 +40,8 @@ const searchCollectionByNameAndOwner = (name, limit) => {
                 </div>
             </div>
             `
-        })
+        });
+
     })
     .catch(error => {
         console.log(error);

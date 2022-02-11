@@ -1,4 +1,4 @@
-from flask import Flask, jsonify,render_template, request, redirect, session, flash
+from flask import Flask, jsonify,render_template, request, redirect, session, flash, json
 from peep_app import app
 from peep_app.models import userModel, postModel, countryModel
 from flask_bcrypt import Bcrypt
@@ -261,7 +261,7 @@ def profileAPI(profileId):
             return jsonify({'data': response, 'status': 'success', 'currentUser': userId}), 200
 
 
-@app.route('/api/users/<int:profileId>/edit', methods=['POST'])
+@app.route('/api/users/<int:profileId>/edit', methods=['PUT'])
 def updateUserAPI(profileId):
     userId = None
 
@@ -269,6 +269,26 @@ def updateUserAPI(profileId):
         userId = session['userId']
         currentUser = userModel.User.findUserById({'userId': userId})
 
-        if currentUser.id != profileId:
+        user = userModel.User.findUserById({'userId': profileId})
+
+        if currentUser.id != user.id:
             return jsonify({'message': 'You can not edit this user', 'status': 'danger'}), 403
 
+        new_data = json.loads(request.data.decode('UTF-8'))
+
+        if userModel.User.validateEditProfile(new_data):
+            data = {
+                'firstname': new_data['firstname'],
+                'lastname': new_data['lastname'],
+                'birthday' : new_data['birthday'],
+                'countryId': new_data['country'],
+                'userId': user.id
+            }
+
+            userModel.User.update_user(data)
+
+            return jsonify({'message': 'User edited successfully', 'status': 'success'}), 201
+        else:
+            return jsonify({'message': 'Validation fails', 'status': 'danger'}), 404
+    else:
+        return jsonify({'message': 'User not logged', 'status': 'danger'}), 404
