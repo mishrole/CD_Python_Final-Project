@@ -109,6 +109,12 @@ const createProfileHeader = (user, currentUser) => {
             buttonFollow.onclick = () => follow(user.id, currentUser, 'profile-data');
             flexFollowUnfollowContainer.append(buttonFollow);
         }
+    } else {
+        const editProfileAnchor = document.createElement('a');
+        editProfileAnchor.classList.add('btn', 'btn-outline-secondary');
+        editProfileAnchor.textContent = 'Edit profile';
+        editProfileAnchor.href = `/users/profile/${currentUser}/edit`;
+        flexFollowUnfollowContainer.append(editProfileAnchor);
     }
     
     colImageContainer.appendChild(profileImage);

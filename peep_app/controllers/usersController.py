@@ -1,6 +1,6 @@
 from flask import Flask, jsonify,render_template, request, redirect, session, flash
 from peep_app import app
-from peep_app.models import userModel, postModel
+from peep_app.models import userModel, postModel, countryModel
 from flask_bcrypt import Bcrypt
 from peep_app.constants import user_status_enum
 
@@ -53,6 +53,33 @@ def login():
     
         session['userId'] = user.id
         return redirect('/dashboard')
+
+
+@app.route('/users/profile/<int:profileId>/edit', methods=['GET'])
+def edit_profile(profileId):
+    userId = None
+
+    if 'userId' in session:
+        userId = session['userId']
+        isLogged = True
+
+        currentUser = userModel.User.findUserById({'userId': userId})
+        user = userModel.User.findUserById({'userId': profileId})
+
+        countries = countryModel.Country.get_all()
+
+        if user.id != currentUser.id:
+            return redirect('/')
+
+        return render_template(
+            'edit_profile.html',
+            currentUser = currentUser,
+            isLogged = isLogged,
+            countries = countries
+        )
+
+    else:
+        return redirect('/')
 
 
 @app.route('/users/profile/<int:profileId>', methods=['GET'])
@@ -232,4 +259,16 @@ def profileAPI(profileId):
             return jsonify({'message': 'User not found', 'status': 'danger'}), 404
         else:
             return jsonify({'data': response, 'status': 'success', 'currentUser': userId}), 200
-            
+
+
+@app.route('/api/users/<int:profileId>/edit', methods=['POST'])
+def updateUserAPI(profileId):
+    userId = None
+
+    if 'userId' in session:
+        userId = session['userId']
+        currentUser = userModel.User.findUserById({'userId': userId})
+
+        if currentUser.id != profileId:
+            return jsonify({'message': 'You can not edit this user', 'status': 'danger'}), 403
+

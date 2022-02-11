@@ -299,3 +299,8 @@ class User:
         results = connectToMySQL('peep_app_schema').query_db(query, data)
         return results
 
+
+    @classmethod
+    def update_user(cls, data):
+        query = "INSERT INTO users(firstname, lastname, birthday, gender, nickname, upated_at) VALUES (%(firstname)s, %(lastname)s, %(birthday)s, %(gender)s, %(nickname)s, NOW());"
+        return connectToMySQL('peep_app_schema').query_db(query, data)
