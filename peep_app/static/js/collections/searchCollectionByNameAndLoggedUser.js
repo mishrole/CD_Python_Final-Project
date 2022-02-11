@@ -1,9 +1,11 @@
 const searchCollectionByNameAndLoggedUser = (name, currentPostId) => {
+    const limit = 5;
+
     const config = {
         method: 'GET'
     }
 
-    fetch( `${APP_URL}/api/collections/search?name=${name}`, config)    
+    fetch( `${APP_URL}/api/collections/search?name=${name}&limit=${limit}`, config)    
     .then(response => {
         if (response.ok) {
             return response.json()

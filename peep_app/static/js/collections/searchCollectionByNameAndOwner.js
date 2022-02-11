@@ -1,4 +1,4 @@
-const searchCollectionByNameAndOwner = (name) => {
+const searchCollectionByNameAndOwner = (name, limit) => {
 
     const ownerId = getItemByReferenceAndReversePosition(path = window.location.pathname, reference = '', position = 1);
 
@@ -6,7 +6,7 @@ const searchCollectionByNameAndOwner = (name) => {
         method: 'GET'
     }
 
-    fetch( `${APP_URL}/api/collections/${ownerId}/search?name=${name}`, config)    
+    fetch( `${APP_URL}/api/collections/${ownerId}/search?name=${name}&limit=${limit}`, config)    
     .then(response => {
         if (response.ok) {
             return response.json()

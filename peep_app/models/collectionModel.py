@@ -52,7 +52,8 @@ class Collection:
         # search = "'%" + data['search'] + "%'"
         search = "'" + data['search'] + "%'"
         userId = data['userId']
-        query = "Select * from collections C inner join users U on C.owner_id = U.id where C.name like %s and C.owner_id like %i order by C.name asc limit 5;" % (search, userId,)
+        limit = data['limit']
+        query = "Select * from collections C inner join users U on C.owner_id = U.id where C.name like %s and C.owner_id like %i order by C.name asc limit %s;" % (search, userId, limit,)
         results = connectToMySQL('peep_app_schema').query_db(query)
 
         collections = []

@@ -147,6 +147,7 @@ def createFastCollectionAPI():
 def search_by_name_and_ownerAPI(ownerId):
 
     name = request.args.get('name')
+    limit = request.args.get('limit')
 
     userId = None
 
@@ -156,7 +157,8 @@ def search_by_name_and_ownerAPI(ownerId):
 
         request_data = {
             'search': name,
-            'userId': ownerId
+            'userId': ownerId,
+            'limit': limit
         }
 
         collections = collectionModel.Collection.search_by_name_and_owner(request_data)
@@ -206,7 +208,7 @@ def search_by_name_and_ownerAPI(ownerId):
 def search_by_name_and_logged_userAPI():
 
     name = request.args.get('name')
-    print(name)
+    limit = request.args.get('limit')
 
     userId = None
 
@@ -216,7 +218,8 @@ def search_by_name_and_logged_userAPI():
 
         request_data = {
             'search': name,
-            'userId': currentUser.id
+            'userId': currentUser.id,
+            'limit': limit
         }
 
         collections = collectionModel.Collection.search_by_name_and_owner(request_data)

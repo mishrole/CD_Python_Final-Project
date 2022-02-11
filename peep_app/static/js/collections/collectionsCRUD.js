@@ -8,10 +8,12 @@ createCollectionModalBtn.addEventListener('click', () => {
     const collectionNameForm = document.querySelector('#floatCollectionName');
     collectionNameForm.value = inputCollectionSearch.value;
     showCollectionsModal();
-})
+});
+
+const limit = 10;
 
 inputCollectionSearch.addEventListener('keyup', (e) => {
-    searchCollectionByNameAndOwner(inputCollectionSearch.value);
+    searchCollectionByNameAndOwner(inputCollectionSearch.value, limit);
 });
 
 // Validate new Collection form and request
@@ -52,5 +54,5 @@ function hideCollectionsModal() {
 }
 
 (function() {
-    searchCollectionByNameAndOwner("");
+    searchCollectionByNameAndOwner("", limit);
 })();
