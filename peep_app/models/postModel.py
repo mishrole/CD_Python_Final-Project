@@ -19,7 +19,7 @@ class Post:
 
     @classmethod
     def get_all(cls, data):
-        query = "SELECT * FROM posts P INNER JOIN users U on U.id = P.author_id order by P.id desc"
+        query = "SELECT * FROM posts P INNER JOIN users U on U.id = P.author_id order by P.updated_at desc"
         results = connectToMySQL('peep_app_schema').query_db(query, data)
 
         posts = []
@@ -92,7 +92,7 @@ class Post:
 
     @classmethod
     def get_all_by_author(cls, data):
-        query = "SELECT * FROM posts P INNER JOIN users U on U.id = P.author_id WHERE U.id = %(userId)s order by P.id desc;"
+        query = "SELECT * FROM posts P INNER JOIN users U on U.id = P.author_id WHERE U.id = %(userId)s order by P.updated_at desc;"
         results = connectToMySQL('peep_app_schema').query_db(query, data)
 
         posts = []

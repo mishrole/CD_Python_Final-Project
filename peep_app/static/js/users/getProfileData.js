@@ -182,7 +182,9 @@ const createProfilePosts = (posts, currentUser) => {
         spanNameProfile.classList.add('text-primary', 'fs-6', 'fw-normal');
 
         if ( post.author.username != null ) {
-            spanNameProfile.textContent = `@${post.author.username}`;
+            spanNameProfile.textContent = `@${post.author.username} • ${post.time_ago}`;
+        } else {
+            spanNameProfile.textContent = ` • ${post.time_ago}`;
         }
 
         const postContent = document.createElement('div');

@@ -26,5 +26,7 @@ const editProfile = (data) => {
         })
         .finally(() => {
             // getAllPosts();
+            // window.history.back();
+            window.location.href = `/users/profile/${userId}`;
         })
 }
